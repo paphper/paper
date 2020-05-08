@@ -1,6 +1,6 @@
 {
-    "name": "draftphp/draft",
-    "description": "Developer friendly site generator written in PHP",
+    "name": "paphper/paper",
+    "description": "Developer friendly site generator written in React PHP",
     "type": "project",
     "homepage": "https://draftphp.github.io/",
     "license": "MIT",
