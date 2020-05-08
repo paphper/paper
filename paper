@@ -1,0 +1,19 @@
+#!/usr/bin/env php
+<?php
+
+use \Symfony\Component\Console\Application;
+use Paphper\Commands\Watch;
+use Paphper\Commands\Build;
+use Paphper\Config;
+
+require_once 'vendor/autoload.php';
+
+$configData = include 'config.php';
+$devConfig  = array_merge($configData, ['is_dev' => true]);
+
+$app = new Application;
+
+$app->add(new Watch(new Config($devConfig)));
+$app->add(new Build(new Config($configData)));
+
+$app->run();

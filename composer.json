@@ -1,0 +1,22 @@
+{
+    "name": "draftphp/draft",
+    "description": "Developer friendly site generator written in PHP",
+    "type": "project",
+    "homepage": "https://draftphp.github.io/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Naren",
+            "email": "developer.naren@gmail.com",
+            "homepage": "https://developernaren.com/",
+            "role": "Developer"
+        },
+        {
+            "name": "Salam",
+            "email": "salamwaddah@gmail.com"
+        }
+    ],
+    "require": {
+        "paphper/core": "^0.0.1"
+    }
+}
