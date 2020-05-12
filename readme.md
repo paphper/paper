@@ -19,14 +19,14 @@ You can change this port to your choice at [/config.php](/config.php).
 ### Folder Structure
 
 #### /pages
-This is where all the pages for the site lives. `.html` and `.md` files are supported as pages. The folder structure of pages decides the routes.  
+This is where all the pages for the site lives. `.html` and `.md` files are supported as pages. The folder structure of pages decides the routes.    
 For example:
-`pages/index.html` will be displayed at `/`
-`pages/readme.md` will be displayed at `/readme`
-`pages/posts/post.html` will be displayed at `/posts/post`
+- `pages/index.html` will be displayed at `/`
+- `pages/readme.md` will be displayed at `/readme`
+- `pages/posts/post.html` will be displayed at `/posts/post`
 
 #### /layouts
-This is where all the layouts for the site lives
+This is where all the layouts for the site lives. Only html files are supported as layouts.
 
 #### /assets
 This is where the images, css and other assets live
