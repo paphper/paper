@@ -2,7 +2,7 @@
     "name": "paphper/paper",
     "description": "Developer friendly site generator written in React PHP",
     "type": "project",
-    "homepage": "https://draftphp.github.io/",
+    "homepage": "https://paphper.github.io/",
     "license": "MIT",
     "authors": [
         {
@@ -17,6 +17,6 @@
         }
     ],
     "require": {
-        "paphper/core": "^0.0.1"
+        "paphper/core": "^0.0.2"
     }
 }
