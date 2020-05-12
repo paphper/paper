@@ -13,7 +13,7 @@ Paphper is Static Site Generator written on top of ReactPHP.
 This runs a development server at `http://localhost:8888`. 
 This also looks for changes in the files in the `pages` folder and reflects in the browser.
 > Note: This does not watch for the changes in the `layouts`. So, if you make a change in the layout, 
-you will have to modidy something in your page to see the changes in the browser.
+you will have to modify something in your page to see the changes in the browser.
 You can change this port to your choice at [/config.php](/config.php).
 
 ### Folder Structure
