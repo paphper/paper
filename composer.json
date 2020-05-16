@@ -17,6 +17,6 @@
         }
     ],
     "require": {
-        "paphper/core": "^0.0.6"
+        "paphper/core": "0.0.7"
     }
 }
