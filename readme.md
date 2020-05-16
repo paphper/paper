@@ -91,7 +91,7 @@ PageResolver is a simple class that implements [PageResolverInterface.php](https
 This is the source of the route structure. The functions explained.
 
 1. `getPages` should return what pages are to be build. It should be a Promise that resolver to an array of strings.(`pages`).
-1. `getBuildFilename` should return the file that this should added the content provided the page. MUST be a full path
+1. `getBuildFilename(string $page)` should return the file that this should be added the parsed content of the page to. MUST be a full path
 1. `getBuildFolder` should return the folder that should be created to place the file. MUST be a full path.  
 
 The default PageResolver used in Paphper is [FilesystemPageResolver](https://github.com/paphper/core/blob/master/src/PageResolvers/FilesystemPageResolver.php)
@@ -113,9 +113,12 @@ We have three FileTypeResolvers at the moment.
 1. MdResolver
 3. BladeResolver
 
+Paphper uses this interface to internally add support for multiple file types.
+
 ### MetaInterface
 
 Meta parser parses the meta in a page. The default meta parser is [Paper Tag Parser](https://github.com/paphper/core/blob/master/src/Parsers/AbstractPaperTagParser.php) which implements [MetaInterfaec](https://github.com/paphper/core/blob/master/src/Contracts/MetaInterface.php)
+`Paper Tag Parser` as name suggests the `<paper>` tag on top of the files.
 
 You can implement your own meta parser as well. The functions explained.
 
