@@ -19,11 +19,12 @@ You can change this port to your choice at [/config.php](/config.php).
 ### Folder Structure
 
 #### /pages
-This is where all the pages for the site lives. `.html` and `.md` files are supported as pages. The folder structure of pages decides the routes.    
+This is where all the pages for the site lives. `.html`, `.md` and [Blade](https://laravel.com/docs/7.x/blade) files are supported as pages. The folder structure of pages decides the routes.    
 For example:
 - `pages/index.html` will be displayed at `/`
 - `pages/readme.md` will be displayed at `/readme`
 - `pages/posts/post.html` will be displayed at `/posts/post`
+- `pages/blade.blade.php` will be displayed at `/blade`
 
 #### /layouts
 This is where all the layouts for the site lives. Only html files are supported as layouts.
@@ -67,3 +68,72 @@ Example paper tag
     layout: blog.html
 </paper>
 ``` 
+
+### File types supported
+
+Paphper supports three file types for now.
+
+1. Html
+1. Md
+1. [Blade Templates](https://laravel.com/docs/7.x/blade)
+
+
+## Advance Usage
+
+I have tried to make this thing as flexible and extendable as it can be. Let me explain a bit of architecture to help me explain this.
+
+### Architecture
+
+#### PageResolvers
+
+PageResolver is a simple class that implements [PageResolverInterface.php](https://github.com/paphper/core/blob/master/src/Contracts/PageResolverInterface.php)
+
+This is the source of the route structure. The functions explained.
+
+1. `getPages` should return what pages are to be build. It should be a Promise that resolver to an array of strings.(`pages`).
+1. `getBuildFilename` should return the file that this should added the content provided the page. MUST be a full path
+1. `getBuildFolder` should return the folder that should be created to place the file. MUST be a full path.  
+
+The default PageResolver used in Paphper is [FilesystemPageResolver](https://github.com/paphper/core/blob/master/src/PageResolvers/FilesystemPageResolver.php)
+This scans the folder in the pages folder and retrieves that pages and decides on the files and folder to be created.
+
+This can be extended to use, for instance, a mysql table with posts and create the page based on the uri of that post.
+
+### FileTypeResolver
+
+Content is the class that interprets any file into HTML. It implements [Contentinterface](https://github.com/paphper/core/blob/master/src/Contracts/ContentInterface.php).
+The needs to have one function.
+
+1. `resolveFileType(string $filename)` when passes a filename should simple return a `ContentInterface`. 
+`ContentInterface` returns promise that resolves to a string. This is the final content that will be written in the HTML file generated.
+
+We have three FileTypeResolvers at the moment.
+
+1. HtmlResolver
+1. MdResolver
+3. BladeResolver
+
+### MetaInterface
+
+Meta parser parses the meta in a page. The default meta parser is [Paper Tag Parser](https://github.com/paphper/core/blob/master/src/Parsers/AbstractPaperTagParser.php) which implements [MetaInterfaec](https://github.com/paphper/core/blob/master/src/Contracts/MetaInterface.php)
+
+You can implement your own meta parser as well. The functions explained.
+
+1. `getBody` this should be able to get the body of the page without the meta that will be written to the HTML.
+1. `getLayout` this should be able to get the layout that will be used. In case of blade templates, this is not required because it is handled by blade itself.
+1. `getLayoutContent` should get the content of the layout so that the meta and content could be passed to this.
+1. `get` this should return meta value on passing the meta key
+1. `getExtraMetas` this is all the metas
+1. `process` returns a promise. Since we are working with promises for filesystem, the file has to be read once to process content of the page. 
+If we process promises individually in every call it becomes hard to return as types and becomes a callback hell. 
+Hence we call the process function to set all the properties.
+
+### Putting this together
+
+We basically put this together to create a static site. 
+
+https://github.com/paphper/core/blob/master/paper#L26-L43. These are the defaults used in `paper`. You can customize and write you own. I am planning to add more. 
+Let me know what should be added to this. Create a PR or issues for suggestions, contributions and feedback.
+
+
+

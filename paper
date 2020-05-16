@@ -1,19 +1,48 @@
 #!/usr/bin/env php
 <?php
 
-use \Symfony\Component\Console\Application;
+use Paphper\Config;
+use Paphper\FileContentResolver;
+use Paphper\FileTypeResolvers\HtmlResolver;
+use Paphper\FileTypeResolvers\MdResolver;
+use Paphper\PageResolvers\FilesystemPageResolver;
+use React\EventLoop\Factory;
+use React\Filesystem\Filesystem;
+use Symfony\Component\Console\Application;
 use Paphper\Commands\Watch;
 use Paphper\Commands\Build;
-use Paphper\Config;
 
 require_once 'vendor/autoload.php';
 
-$configData = include 'config.php';
-$devConfig  = array_merge($configData, ['is_dev' => true]);
+$loop = Factory::create();
+$filesystem = Filesystem::create($loop);
+$app = new Application();
 
-$app = new Application;
+$configData = include  __DIR__ . '/config.php';
+$config = new Config($configData);
 
-$app->add(new Watch(new Config($devConfig)));
-$app->add(new Build(new Config($configData)));
+
+//resolve the class that creates content from the file
+$fileContentResolver = new FileContentResolver();
+
+//this class resolves the class that can generate content
+//based on the content in the file with extension .html
+$htmlResolver = new HtmlResolver($config, $filesystem);
+$fileContentResolver->add('.html', $htmlResolver);
+
+//this class resolves the class that can generate content
+//based on the content in the file with extension .md
+$mdResolver = new MdResolver($config, $filesystem);
+$fileContentResolver->add('.md', $mdResolver);
+
+//this class resolves the class that can generate content
+//based on the content in the file with extension .blade.php
+$bladeResolver = new \Paphper\FileTypeResolvers\BladeResolver($config, $filesystem);
+$fileContentResolver->add('.blade.php', $bladeResolver);
+
+$pageResolvers = new FilesystemPageResolver($config, $filesystem);
+
+$app->add(new Watch($config, $pageResolvers, $fileContentResolver, $filesystem, $loop));
+$app->add(new Build($config, $pageResolvers, $fileContentResolver, $filesystem, $loop));
 
 $app->run();

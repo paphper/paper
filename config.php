@@ -6,4 +6,5 @@ return [
     'build_dir' => __DIR__ . '/build',
     'assets_dir' => __DIR__ . '/assets',
     'port' => '8888',
+    'cache_dir' => __DIR__ . '/cache',
 ];
