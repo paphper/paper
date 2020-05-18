@@ -11,14 +11,15 @@ use React\Filesystem\Filesystem;
 use Symfony\Component\Console\Application;
 use Paphper\Commands\Watch;
 use Paphper\Commands\Build;
+use Intervention\Image\ImageManager;
 
 require_once 'vendor/autoload.php';
 
 $loop = Factory::create();
 $filesystem = Filesystem::create($loop);
-$app = new Application();
 
-$configData = include  __DIR__ . '/config.php';
+
+$configData = include __DIR__ . '/config.php';
 $config = new Config($configData);
 
 
@@ -42,7 +43,11 @@ $fileContentResolver->add('.blade.php', $bladeResolver);
 
 $pageResolvers = new FilesystemPageResolver($config, $filesystem);
 
-$app->add(new Watch($config, $pageResolvers, $fileContentResolver, $filesystem, $loop));
-$app->add(new Build($config, $pageResolvers, $fileContentResolver, $filesystem, $loop));
+$manager = new ImageManager(['driver' => 'gd']);
+
+$app = new Application();
+
+$app->add(new Watch($config, $pageResolvers, $fileContentResolver, $filesystem, $loop, $manager));
+$app->add(new Build($config, $pageResolvers, $fileContentResolver, $filesystem, $loop, $manager));
 
 $app->run();
