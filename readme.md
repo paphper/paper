@@ -79,19 +79,19 @@ Paphper supports three file types for now.
 
 ### Image resize support
 
-Paphper has support for image resizes as well from a single source file. You can reference size of an image and it will generate that size. 
+Paphper has support for image resizes as well from a single source file. You can reference size of an image and it will generate that size.   
 For example:  
 There is a file [envelope.jpg](/assets/envelope.jpeg) in assets folder. It is referenced in the [index.html](/pages/index.html) 
 and in referenced as `/envelope_50x50.jpeg` in [index layout](/layouts/index.html). This will copy the original file and also create a /envelope_50x50.jpeg in the given dimension.  
 
 For this to work. The image MUST be referenced as fiiname_widthxheight.jpeg.
 For example:  
-
-To generate a 50x50 dimension image for `/envelope.jpeg`, it must be referenced as `/envelope50x50.jpeg`.
+To generate a 50x50 dimension image for `/envelope.jpeg`, it must be referenced as `/envelope_50x50.jpeg`.
 
 ### Building
 
-`php paper build` builds html files into the build folder. Which can be specified [here](/config.php).
+`php paper build` builds html files into the build folder. Which can be specified [here](/config.php).  
+
 ![img](https://i.ibb.co/qrrzYrJ/Screen-Shot-2020-05-18-at-10-25-34-PM.png)
 
 
