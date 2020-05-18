@@ -17,6 +17,6 @@
         }
     ],
     "require": {
-        "paphper/core": "dev-image-resize-support"
+        "paphper/core": "0.0.8"
     }
 }
