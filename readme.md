@@ -6,6 +6,13 @@ Paphper is Static Site Generator written on top of ReactPHP.
 
 `composer create-project paphper/paper`
 
+##### Docker Support
+You can use paper on docker too here are some additional steps -:
+* `docker-compose up -d`
+* `docker exec -i paper php run dev` 
+* Start building awesome templates
+
+
 ### Development
 
 `php paper dev`
