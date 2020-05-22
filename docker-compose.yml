@@ -1,0 +1,10 @@
+version: '2'
+services:
+  paper:
+    container_name: paper
+    build: .
+    tty: true
+    ports:
+    - "8888:8888"
+    volumes:
+      - .:/cli
